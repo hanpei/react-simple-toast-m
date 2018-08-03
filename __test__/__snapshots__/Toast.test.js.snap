@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createToast DefaultToast 1`] = `
+<React.Fragment>
+  <div
+    className="maskTransparent"
+  />
+  <div
+    className="toast"
+  >
+    <p
+      className="toastContent"
+    >
+      hello world
+    </p>
+  </div>
+</React.Fragment>
+`;
+
+exports[`createToast DefaultToast 2`] = `
+<React.Fragment>
+  <div
+    className="maskTransparent"
+  />
+  <div
+    className="toast"
+  >
+    <div
+      className="toastContent"
+    >
+      <div
+        className="spinner"
+      >
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+      </div>
+    </div>
+  </div>
+</React.Fragment>
+`;
+
+exports[`createToast custom Toast 1`] = `
+<React.Fragment>
+  <App
+    hideLoading={[Function]}
+    showLoading={[Function]}
+    showToast={[Function]}
+  />
+</React.Fragment>
+`;
+
+exports[`createToast custom Toast 2`] = `
+<App
+  hideLoading={[Function]}
+  showLoading={[Function]}
+  showToast={[Function]}
+/>
+`;
+
+exports[`createToast hoc 1`] = `
+<React.Fragment>
+  <App
+    hideLoading={[Function]}
+    showLoading={[Function]}
+    showToast={[Function]}
+  />
+</React.Fragment>
+`;
+
+exports[`createToast hoc 2`] = `
+<React.Fragment>
+  <App
+    hideLoading={[Function]}
+    showLoading={[Function]}
+    showToast={[Function]}
+  />
+</React.Fragment>
+`;
+
+exports[`createToast injected props 1`] = `
+<React.Fragment>
+  <App
+    hideLoading={[Function]}
+    showLoading={[Function]}
+    showToast={[Function]}
+  />
+</React.Fragment>
+`;
+
+exports[`createToast injected props 2`] = `
+<React.Fragment>
+  <App
+    hideLoading={[Function]}
+    showLoading={[Function]}
+    showToast={[Function]}
+  />
+</React.Fragment>
+`;
+
+exports[`createToast injected props 3`] = `
+<React.Fragment>
+  <App
+    hideLoading={[Function]}
+    showLoading={[Function]}
+    showToast={[Function]}
+  />
+</React.Fragment>
+`;
+
+exports[`createToast life circle 1`] = `
+<React.Fragment>
+  <App
+    hideLoading={[Function]}
+    showLoading={[Function]}
+    showToast={[Function]}
+  />
+</React.Fragment>
+`;
+
+exports[`createToast withToast 1`] = `<WithToast(Content) />`;

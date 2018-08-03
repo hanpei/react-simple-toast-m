@@ -1,3 +1,4 @@
-import createToast from './toast/Toast';
+import createToast, { withToast } from './toast/Toast';
 
 export default createToast;
+export { withToast }

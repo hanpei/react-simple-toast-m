@@ -6,9 +6,9 @@
   "scripts": {
     "start": "webpack-dev-server --config config/webpack.config.js --mode development",
     "lib": "webpack --config config/webpack.config.lib.js --mode production",
-    "test": "jest --env=jsdom",
+    "test": "jest --env=jsdom --watchAll",
     "codecov": "codecov",
-    "coverage": "jest --env=jsdom --coverage",
+    "coverage": "jest",
     "build-demo": "webpack --config config/webpack.config.js --mode production",
     "deploy": "gh-pages -d examples/dist",
     "publish-demo": "npm run build-demo && npm run deploy"
@@ -19,7 +19,7 @@
   ],
   "jest": {
     "collectCoverageFrom": [
-      "src/picker/*.{js,jsx,mjs}"
+      "src/**/*.{js,jsx,mjs}"
     ],
     "coverageDirectory": "./coverage/",
     "collectCoverage": true,
@@ -27,7 +27,7 @@
       "<rootDir>/**/__tests__/**/*.{js,jsx,mjs}",
       "<rootDir>/**/?(*.)(spec|test).{js,jsx,mjs}"
     ],
-    "testEnvironment": "node",
+    "testEnvironment": "jsdom",
     "testURL": "http://localhost",
     "transform": {
       "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",

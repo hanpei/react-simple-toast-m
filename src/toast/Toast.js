@@ -2,10 +2,8 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 import styles from './Toast.css';
-
-function getDisplayName(WrappedComponent) {
-  return WrappedComponent.displayName || WrappedComponent.name || 'Component';
-}
+import { getDisplayName } from "./utils";
+import Content from './Content';
 
 const createToast = config => WrappedComponent => {
   return class ToastHOC extends Component {
@@ -133,4 +131,8 @@ const DefaultToast = ({ message }) => {
   );
 };
 
+
+const withToast = (config) => createToast(config)(Content);
+
 export default createToast;
+export { withToast, DefaultToast }

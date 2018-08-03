@@ -1,15 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { render } from 'react-dom';
-import createToast from '../../src';
+import createToast, { withToast } from '../../src';
 import styles from './index.css';
 import CustomToast from './CustomToast';
 
-import Button from './Button';
 import Demo from './Demo';
 
-const WithToast = createToast()(Button);
-const WithCustomToast = createToast({ custom: CustomToast })(Button);
+const WithToast = withToast()
+const WithCustomToast = withToast({ custom: CustomToast });
 
 class App extends Component {
   render() {
