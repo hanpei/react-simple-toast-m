@@ -1,6 +1,9 @@
 # react-simple-toast-m
 
-react mobile toast, loader
+react mobile toast, loader 
+
+[![Build Status](https://travis-ci.org/hanpei/react-simple-toast-m.svg?branch=master)](https://travis-ci.org/hanpei/react-simple-toast-m)
+[![codecov](https://codecov.io/gh/hanpei/react-simple-toast-m/branch/master/graph/badge.svg)](https://codecov.io/gh/hanpei/react-simple-toast-m)
 
 ## Demo
 
