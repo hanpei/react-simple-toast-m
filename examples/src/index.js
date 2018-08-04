@@ -4,11 +4,12 @@ import { render } from 'react-dom';
 import createToast, { withToast } from '../../src';
 import styles from './index.css';
 import CustomToast from './CustomToast';
+import CustomLoader from './CustomLoader';
 
 import Demo from './Demo';
 
-const WithToast = withToast()
-const WithCustomToast = withToast({ custom: CustomToast });
+const WithToast = withToast();
+const WithCustomToast = withToast({ toast: CustomToast, loader: CustomLoader });
 
 class App extends Component {
   render() {
@@ -64,7 +65,5 @@ class App extends Component {
     );
   }
 }
-
-
 
 render(<App />, document.getElementById('root'));

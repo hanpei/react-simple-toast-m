@@ -4,11 +4,8 @@ import Content from '../src/toast/Content';
 
 describe('Content', () => {
   it('render', () => {
-    const content = shallow(
-      <Content>
-        {() => <h1>content </h1>}
-      </Content>
-    );
+    const App = <Content>{() => <h1>something test</h1>}</Content>;
+    const content = shallow(App);
     expect(content).toMatchSnapshot();
   });
 });

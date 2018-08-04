@@ -1,11 +1,12 @@
 {
   "name": "react-simple-toast-m",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "react mobile toast, loader",
   "main": "lib/react-simple-toast-m.js",
   "scripts": {
     "start": "webpack-dev-server --config config/webpack.config.js --mode development",
     "lib": "webpack --config config/webpack.config.lib.js --mode production",
+    "lint": "eslint --ext .js src __test__",
     "test": "jest --env=jsdom --watchAll",
     "codecov": "codecov",
     "coverage": "jest",
@@ -58,6 +59,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.6",
     "babel-jest": "^23.4.2",
     "babel-loader": "^7.1.5",
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
@@ -69,6 +71,12 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.4",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.10.0",
     "gh-pages": "^1.2.0",
     "html-webpack-plugin": "^3.2.0",
     "identity-obj-proxy": "^3.0.0",
@@ -76,6 +84,7 @@
     "mini-css-extract-plugin": "^0.4.1",
     "postcss-cssnext": "^3.1.0",
     "postcss-loader": "^2.1.6",
+    "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-test-renderer": "^16.4.1",
@@ -89,7 +98,8 @@
   "peerDependencies": {
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
-    "react-transition-group": "^2.4.0"
+    "react-transition-group": "^2.4.0",
+    "prop-types": "^15.6.2"
   },
   "author": "hanpei",
   "license": "MIT",

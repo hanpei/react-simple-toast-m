@@ -1,20 +1,34 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
+import { CSSTransition } from 'react-transition-group';
 import styles from './Toast.css';
-import { getDisplayName } from "./utils";
+import { getDisplayName } from './utils';
 import Content from './Content';
 
-const createToast = config => WrappedComponent => {
+const createToast = (config = {}) => (WrappedComponent) => {
+  const renderToastComponent = (message) => {
+    const { toast: ToastCustomComponent, loader: LoaderCustomComponent } = config;
+
+    if (message) {
+      return ToastCustomComponent ? (
+        <ToastCustomComponent message={message} />
+      ) : (
+        <DefaultToast message={message} />
+      );
+    }
+    return LoaderCustomComponent ? <LoaderCustomComponent /> : <DefaultLoader />;
+  };
+
   return class ToastHOC extends Component {
-    static displayName = `WithToast(${getDisplayName(WrappedComponent)})`
-    state = {
-      toastShown: false,
-      toastMessage: ''
-    };
+    static displayName = `WithToast(${getDisplayName(WrappedComponent)})`;
 
     constructor() {
       super();
+      this.state = {
+        toastShown: false,
+        toastMessage: '',
+      };
       const div = document.getElementById('react-simple-toast-container');
       if (div) {
         this.modalDiv = div;
@@ -26,56 +40,56 @@ const createToast = config => WrappedComponent => {
     }
 
     componentWillUnmount() {
+      const { toastShown } = this.state;
       if (this.timerId) {
         clearTimeout(this.timerId);
         this.timerId = undefined;
       }
-      if (this.state.toastShown) {
+      if (toastShown) {
         this.setState({
-          toastShown: false
+          toastShown: false,
         });
       }
       document.body.removeChild(this.modalDiv);
     }
+
     showToast = (msg, callback) => {
       this.setState(
         {
           toastShown: true,
-          toastMessage: msg
+          toastMessage: msg,
         },
         () => {
           this.timerId = setTimeout(() => {
             this.setState(
               {
                 toastShown: false,
-                toastMessage: ''
+                toastMessage: msg,
               },
-              callback
+              callback,
             );
           }, 1500);
-        }
+        },
       );
     };
+
     showLoading = () => {
       this.setState({
-        toastShown: true
-      });
-    };
-    hideLoading = () => {
-      this.setState({
-        toastShown: false
+        toastShown: true,
       });
     };
 
-    renderToastComponent(toastMessage) {
-      let ToastComponent;
-      if (config && config.custom) {
-        ToastComponent = config.custom;
-      } else {
-        ToastComponent = DefaultToast;
-      }
-      return <ToastComponent message={toastMessage} />;
-    }
+    hideLoading = () => {
+      this.setState({
+        toastShown: false,
+      });
+    };
+
+    clearMsg = () => {
+      this.setState({
+        toastMessage: '',
+      });
+    };
 
     render() {
       const { toastShown, toastMessage } = this.state;
@@ -87,52 +101,85 @@ const createToast = config => WrappedComponent => {
             hideLoading={this.hideLoading}
             {...this.props}
           />
-          {toastShown &&
-            createPortal(
-              this.renderToastComponent(toastMessage),
-              this.modalDiv
+          <Fragment>
+            {createPortal(
+              <Fade in={toastShown} handleExited={this.clearMsg}>
+                <div>
+                  {renderToastComponent(toastMessage)}
+                </div>
+              </Fade>,
+              this.modalDiv,
             )}
+          </Fragment>
         </Fragment>
       );
     }
   };
 };
 
-const DefaultToast = ({ message }) => {
-  return message ? (
-    <Fragment>
-      <div className={styles.maskTransparent} />
-      <div className={styles.toast}>
-        <p className={styles.toastContent}>{message}</p>
-      </div>
-    </Fragment>
-  ) : (
-    <Fragment>
-      <div className={styles.maskTransparent} />
-      <div className={styles.toast}>
-        <div className={styles.toastContent}>
-          <div className={styles.spinner}>
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-          </div>
+const DefaultLoader = () => (
+  <Fragment>
+    <div className={styles.maskTransparent} />
+    <div className={styles.toast}>
+      <div className={styles.toastContent}>
+        <div className={styles.spinner}>
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
         </div>
       </div>
-    </Fragment>
-  );
+    </div>
+  </Fragment>
+);
+
+const DefaultToast = ({ message }) => (
+  <Fragment>
+    <div className={styles.maskTransparent} />
+    <div className={styles.toast}>
+      <p className={styles.toastContent}>
+        {message}
+      </p>
+    </div>
+  </Fragment>
+);
+DefaultToast.propTypes = {
+  message: PropTypes.string.isRequired,
 };
 
-
-const withToast = (config) => createToast(config)(Content);
+const withToast = config => createToast(config)(Content);
 
 export default createToast;
-export { withToast, DefaultToast }
+export { withToast, DefaultToast, DefaultLoader };
+
+// slide animation
+export const Fade = ({ in: inProp, children, handleExited }) => (
+  <CSSTransition
+    in={inProp}
+    timeout={100}
+    mountOnEnter
+    unmountOnExit
+    onExited={handleExited}
+    classNames={{
+      enter: styles.enter,
+      enterActive: styles.enterActive,
+      exit: styles.exit,
+      exitActive: styles.exitActive,
+    }}
+  >
+    {children}
+  </CSSTransition>
+);
+Fade.propTypes = {
+  in: PropTypes.bool.isRequired,
+  children: PropTypes.node.isRequired,
+  handleExited: PropTypes.func.isRequired,
+};

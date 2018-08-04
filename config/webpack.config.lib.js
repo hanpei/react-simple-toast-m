@@ -1,8 +1,9 @@
-/*** webpack.config.js ***/
+/** * webpack.config.js ** */
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
+
 module.exports = {
   entry: path.join(__dirname, '../src/index.js'),
   output: {

@@ -1,14 +1,14 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import createToast, { withToast } from '../src/index';
-import { DefaultToast } from '../src/toast/Toast';
+import { DefaultToast, DefaultLoader, Fade } from '../src/toast/Toast';
 
 describe('createToast', () => {
   it('DefaultToast', () => {
     const toast = shallow(<DefaultToast message="hello world" />);
     expect(toast).toMatchSnapshot();
     toast.unmount();
-    const toast2 = shallow(<DefaultToast />);
+    const toast2 = shallow(<DefaultLoader />);
     expect(toast2).toMatchSnapshot();
     toast.unmount();
   });
@@ -17,7 +17,6 @@ describe('createToast', () => {
     const App = () => <h1>app</h1>;
     App.displayName = 'nameOfComponent';
     const AppWithToast = createToast()(App);
-    const component = shallow(<AppWithToast />);
     expect(AppWithToast.displayName).toBe('WithToast(nameOfComponent)');
   });
 
@@ -36,6 +35,8 @@ describe('createToast', () => {
 
     const callback = jest.fn();
     app.props().showToast('abcdefg', callback);
+    component.instance().clearMsg();
+    expect(component.state('toastMessage')).toBe('');
     jest.runAllTimers();
     expect(callback).toBeCalled();
   });
@@ -55,7 +56,9 @@ describe('createToast', () => {
   it('custom Toast', () => {
     const App = () => <h1>app</h1>;
     const Custom = () => <h1>custom toast</h1>;
-    const AppWithCustomToast = createToast({ custom: Custom })(App);
+    const AppWithCustomToast = createToast({ toast: Custom, loader: Custom })(
+      App
+    );
     const component = shallow(<AppWithCustomToast />);
     expect(component).toMatchSnapshot();
     const app = component.find('App');
@@ -68,7 +71,6 @@ describe('createToast', () => {
     const AppWithToast = createToast()(App);
     const component = shallow(<AppWithToast />);
     expect(component).toMatchSnapshot();
-    const app = component.find('App');
     const props = component.find('App').props();
     expect(Object.keys(props)).toContain(
       'showToast',
@@ -86,16 +88,13 @@ describe('createToast', () => {
   });
 
   it('withToast', () => {
-    const App = () => <h1>app</h1>;
-    const Custom = () => <h1>custom toast</h1>;
-
     const WithToast = withToast();
-    const WithCustomToast = withToast({ custom: Custom });
     const WithToastDemo = () => (
       <WithToast>
         {({ showToast }) => (
           <button
-            className={styles.btn}
+            type="button"
+            className="btn"
             onClick={() => showToast('hello world again')}
           >
             hi again
@@ -103,9 +102,22 @@ describe('createToast', () => {
         )}
       </WithToast>
     );
-  
+
     const component = shallow(<WithToastDemo />);
     expect(component).toMatchSnapshot();
+  });
 
+  it('fade', () => {
+    const fn = jest.fn();
+    let status = true;
+    const fade = shallow(
+      <Fade in={status} handleExited={fn}>
+        <div>fade</div>
+      </Fade>
+    );
+    expect(fade).toMatchSnapshot();
+    status = false;
+    expect(fade).toMatchSnapshot();
+    // expect(fn).toBeCalled();
   });
 });

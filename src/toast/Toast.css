@@ -23,7 +23,6 @@
   width: 100%;
   text-align: center;
   font-size: 14px;
-  word-break: break-all;
 }
 
 /* mask */
@@ -120,4 +119,19 @@
   100% {
     opacity: 0;
   }
+}
+
+.enter {
+  opacity: 0.01;
+}
+.enterActive {
+  opacity: 1;
+  transition: opacity 100ms ease-out;
+}
+.exit {
+  opacity: 1;
+}
+.exitActive {
+  opacity: 0.01;
+  transition: opacity 100ms ease-out;
 }
