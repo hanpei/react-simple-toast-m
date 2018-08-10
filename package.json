@@ -1,6 +1,6 @@
 {
   "name": "react-simple-toast-m",
-  "version": "0.1.1",
+  "version": "0.1.",
   "description": "react mobile toast, loader",
   "main": "lib/react-simple-toast-m.js",
   "scripts": {
@@ -103,6 +103,10 @@
   },
   "author": "hanpei",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanpei/react-simple-toast-m.git"
+  },
   "keywords": [
     "react",
     "component",
